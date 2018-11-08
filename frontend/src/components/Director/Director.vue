@@ -1,5 +1,5 @@
 <template>
-  <div v-on:keyup.enter="submitForm('ruleform')">
+  <div>
     <nav>
       <h1>Ingresando a una nuevo Estudiante</h1>
     </nav>
@@ -47,6 +47,7 @@
     </div>
 </template>
 <script>
+import registroUsario from '../../servicios/alumno'
 import Route from '@/router'
 export default {
   name: 'Director',
@@ -65,7 +66,27 @@ export default {
   },
   methods: {
     submitForm(formName){
-      Route.push('/login')
+      console.log(this.ruleform)
+      var user = {
+        dni: '',
+        nombre: '',
+        apellido: '',
+        edad: '',
+        genero: ''
+      }
+      user.dni=this.ruleform.dni
+      user.nombre=this.ruleform.nombre
+      user.apellido=this.ruleform.apellido
+      user.edad=this.ruleform.edad
+      user.genero=this.ruleform.genero
+      console.log("llegamos aqui")
+      registroUsario.addAlumno(user).then(response => {
+        console.log(response.data)
+        Route.push('/login')
+      }).catch(error => {
+          this.cargando = false
+          console.log(error)
+      })
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
