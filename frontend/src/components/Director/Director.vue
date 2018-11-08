@@ -47,6 +47,7 @@
     </div>
 </template>
 <script>
+import Route from '@/router'
 export default {
   name: 'Director',
   data () {
@@ -64,6 +65,7 @@ export default {
   },
   methods: {
     submitForm(formName){
+      Route.push('/login')
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
